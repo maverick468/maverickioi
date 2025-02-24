@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maverick Video Release</title>
+    <link rel="icon" href="mml.png">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url("mm.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        header {
+            background-color: rgba(117, 159, 130, 0.3);
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        /* Video Section */
+        .video-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            aspect-ratio: 16 / 9;
+            margin-top: 80px;
+        }
+
+        .thumbnail, .video-frame {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #cc2222;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .thumbnail {
+            cursor: pointer;
+        }
+
+        .video-frame {
+            display: none;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .video-container {
+                width: 95%;
+            }
+            header {
+                font-size: 18px;
+                padding: 10px;
+            }
+            button {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="logo.png" alt="Maverick Logo" height="50">
+        <span>Maverick Video Release</span>
+        <nav class="nav-links">
+            <a href="#">Login</a>
+            <a href="#">Sign Up</a>
+        </nav>
+    </header>
+
+    <div class="video-container">
+        <img id="thumbnailPreview" class="thumbnail" src="yon.png" alt="Video Thumbnail" onclick="startVideo()">
+        <iframe id="videoFrame" class="video-frame" src="https://www.youtube.com/embed/uHndpwLag4k?enablejsapi=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <div class="controls">
+        <button onclick="playVideo()">Play</button>
+        <button onclick="pauseVideo()">Pause</button>
+    </div>
+
+    <script>
+        let player;
+        const thumbnail = document.getElementById("thumbnailPreview");
+        const videoFrame = document.getElementById("videoFrame");
+
+        // When YouTube API is ready
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('videoFrame', {
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Initialize YouTube Player
+        function onPlayerReady(event) {
+            // Hide the thumbnail when the video is ready
+            event.target.playVideo();
+        }
+
+        // Handle Play and Pause actions
+        function startVideo() {
+            thumbnail.style.display = "none";
+            videoFrame.style.display = "block";
+            player.playVideo();
+        }
+
+        function playVideo() {
+            if (player) {
+                player.playVideo();
+            }
+        }
+
+        function pauseVideo() {
+            if (player) {
+                player.pauseVideo();
+            }
+        }
+
+        // Load YouTube API script
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+    </script>
+
+</body>
+</html>
